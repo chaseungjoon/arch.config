@@ -61,7 +61,11 @@ if [[ ! -d $SELF_DIR/home || ! -d $SELF_DIR/meta ]]; then
     command -v git >/dev/null || sudo pacman -Sy --needed --noconfirm git
     if [[ -d $DEST/.git ]]; then git -C "$DEST" pull --ff-only
     else git clone "$REPO_URL" "$DEST"; fi
-    exec bash "$DEST/install.sh" "${ORIG_ARGS[@]}" </dev/tty
+    # `curl ... | bash` leaves stdin on the pipe; give the real run the terminal back
+    if [[ ! -t 0 ]] && { : </dev/tty; } 2>/dev/null; then
+        exec bash "$DEST/install.sh" "${ORIG_ARGS[@]}" </dev/tty
+    fi
+    exec bash "$DEST/install.sh" "${ORIG_ARGS[@]}"
 fi
 REPO=$SELF_DIR
 
