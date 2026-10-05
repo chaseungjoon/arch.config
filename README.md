@@ -84,7 +84,7 @@ system/etc/           applied to /etc by install.sh
 reference/etc/        this machine's fstab, mkinitcpio, kernel cmdline, ufw rules, …
                       (disk/bootloader-specific, kept for reference, never applied)
 meta/                 pacman.txt, aur.txt, services-system.txt, services-user.txt, timezone, dconf.ini
-docs/disk-migration.md   back up /home and move this install to a new SSD
+docs/disk-migration.md   new SSD: archinstall + install.sh + restore from the backup stick
 ```
 
 ## Keys
@@ -105,7 +105,7 @@ CapsLock is an extra Super.
 
 ## Intentionally not in this repo
 
-The repo is public, so these never go in. Back them up yourself (see `docs/disk-migration.md`):
+The repo is public, so these never go in. They live only in the USB backup; `docs/disk-migration.md` restores them:
 
 - `~/.ssh/` (keys and the ssh config with tailnet host IPs), `~/.gnupg/`
 - tokens: `~/.config/github-copilot/`, `~/.copilot/`, `~/.claude/`, `~/.claude.json`, any `.env`
