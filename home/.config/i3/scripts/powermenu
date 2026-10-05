@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# retro power menu
+opts=" [L]  LOCK\n [E]  LOGOUT\n [S]  SUSPEND\n [R]  REBOOT\n [P]  POWER OFF"
+choice=$(echo -e "$opts" | rofi -dmenu -i -p "SYSTEM" -no-custom -theme-str 'window {width: 300px;} listview {lines: 5;}')
+confirm() {
+    [[ $(echo -e " NO\n YES" | rofi -dmenu -i -p "$1 ?" -no-custom -theme-str 'window {width: 300px;} listview {lines: 2;}') == " YES" ]]
+}
+case "$choice" in
+    *LOCK)      ~/.config/i3/scripts/lock ;;
+    *LOGOUT)    confirm "LOGOUT"   && i3-msg exit ;;
+    *SUSPEND)   systemctl suspend ;;
+    *REBOOT)    confirm "REBOOT"   && systemctl reboot ;;
+    *"POWER OFF") confirm "POWER OFF" && systemctl poweroff ;;
+esac

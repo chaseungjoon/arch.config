@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Wallpaper (Azote)
+GenericName=Wallpaper picker
+Comment=Browse and set desktop wallpapers from ~/Pictures
+Exec=sh -c "\$HOME/.config/i3/scripts/wallpaper-picker"
+Icon=azote
+Terminal=false
+Categories=Utility;GTK;DesktopSettings;
+Keywords=background;desktop;wallpaper;

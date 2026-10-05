@@ -1,0 +1,37 @@
+# Configuration for Neovim
+
+## Minimal, fast and transparent aesthetic setup
+<img width="2940" height="1648" alt="image" src="https://github.com/user-attachments/assets/fa80f757-4037-4a2e-9243-d6bac9484bc4" />
+<img width="2940" height="1652" alt="image" src="https://github.com/user-attachments/assets/7c2d9266-0a63-4bee-94a2-79dcdaadd6dc" />
+
+## Install
+
+### Prerequisites
+> Neovim >= 0.10, [tree-sitter-cli](https://github.com/tree-sitter/tree-sitter-cli), [ripgrep](https://github.com/burntsushi/ripgrep), [fd](https://github.com/sharkdp/fd), [lua-language-server](https://github.com/LuaLS/lua-language-server), Any Nerd Font
+
+### Clone into config
+
+```bash
+git clone https://github.com/chaseungjoon/nvim.config.git ~/.config/nvim
+```
+
+
+## Plugins
+
+- LSP : pyright, clangd, coc-lua, coc-rust-analyzer
+- Plugins ([lazy.nvim](https://github.com/folke/lazy.nvim))
+    - [alpha-nvim](https://github.com/goolord/alpha-nvim)
+    - [auto-pairs](https://github.com/jiangmiao/auto-pairs)
+    - [coc.nvim](https://github.com/neoclide/coc.nvim)
+    - [copilot.vim](https://github.com/github/copilot.vim)
+    - [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim)
+    - [neo-tree.nvim](https://github.com/nvim-neo-tree/neo-tree.nvim)
+    - [plenary.nvim](https://github.com/nvim-lua/plenary.nvim)
+    - [render-markdown.nvim](https://github.com/MeanderingProgrammer/render-markdown.nvim)
+    - [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)
+    - [tokyonight.nvim](https://github.com/folke/tokyonight.nvim)
+    - [transparent.nvim](https://github.com/xiyaowong/transparent.nvim)
+    - [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)
+    - [vim-surround](https://github.com/tpope/vim-surround)
+    - [vimtex](https://github.com/lervag/vimtex)
+

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+. ~/.config/i3blocks/blocks/_lib
+[[ $BTN == 1 ]] && term sh -c 'sudo pacman -Syu; echo; read -p "[ENTER] to close"'
+command -v checkupdates >/dev/null || exit 0
+n=$(checkupdates 2>/dev/null | wc -l)
+(( n > 0 )) && printf "<span color='#1c1b19'><b> PKG %s </b></span>\n" "$n"
+exit 0

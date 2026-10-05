@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# (re)start autotiling exactly once — safe to call from exec_always
+pkill -f '/usr/bin/autotiling' 2>/dev/null
+command -v autotiling >/dev/null && exec autotiling

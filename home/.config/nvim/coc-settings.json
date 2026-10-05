@@ -1,0 +1,33 @@
+{
+  "suggest.floatEnable": false,
+  "suggest.enablePreview": false,
+  "suggest.preferCompleteThanJumpPlaceholder": false,
+  "suggest.maxCompleteItemCount": 30,
+  "signature.enable": false,
+  "signature.target": "echo",
+  "diagnostic.messageTarget": "echo",
+  "hover.target": "echo",
+
+    "pyright":{
+        "python": {
+            "analysis": {
+                "typeHints": false
+            }
+        }
+    },
+    "python.venvPath": ".venv",
+    "python.analysis.extraPaths": [
+        "./.venv/lib/python3.11/site-packages",
+        "./venv/lib/python3.11/site-packages",
+        "./.venv/lib/python3.12/site-packages",
+        "./venv/lib/python3.12/site-packages",
+        "./.venv/lib/python3.10/site-packages",
+        "./venv/lib/python3.10/site-packages",
+        "./.venv/lib/python3.9/site-packages",
+        "./venv/lib/python3.9/site-packages"
+    ],
+    "clandg.inlayHints.enable": false,
+    "clangd.arguments": [
+        "--compile-commands-dir=build"
+    ]
+}

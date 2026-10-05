@@ -1,0 +1,168 @@
+#!/usr/bin/env python3
+"""AMBER-76 keyboard reference — shown in a floating kitty window (SUPER+SHIFT+H)."""
+import fcntl, os, re, shutil, struct, subprocess, sys, termios, time, tty
+
+def rgb(h, bg=False):
+    r, g, b = (int(h[i:i + 2], 16) for i in (1, 3, 5))
+    return f"\033[{48 if bg else 38};2;{r};{g};{b}m"
+
+BG, BG1, FG, DIM = "#1c1b19", "#2a2723", "#e8dcc0", "#9a8f7a"
+AMBER, ORANGE, TEAL = "#ffb000", "#e8742c", "#3e9d9a"
+STRIPES = ["#d0453b", "#e8742c", "#f2c14e", "#8fb339", "#3e9d9a"]
+RESET, BOLD = "\033[0m", "\033[1m"
+
+SECTIONS = [
+    ("LAUNCH", [
+        ("SUPER+ENTER", "terminal"),
+        ("SUPER+SHIFT+ENTER", "floating terminal"),
+        ("SUPER+`", "dropdown terminal"),
+        ("SUPER+B", "firefox"),
+        ("SUPER+SHIFT+B", "firefox private"),
+        ("SUPER+R", "app launcher"),
+        ("SUPER+D", "run command"),
+        ("SUPER+TAB", "window switcher"),
+        ("SUPER+E", "files (yazi)"),
+        ("SUPER+N", "neovim"),
+        ("SUPER+G", "lazygit"),
+        ("SUPER+C", "calculator"),
+        ("SUPER+P", "clipboard history"),
+        ("SUPER+SHIFT+W", "wallpaper picker"),
+        ("THINKVANTAGE", "btop"),
+    ]),
+    ("SCRATCHPAD", [
+        ("SUPER+SHIFT+-", "hide window"),
+        ("SUPER+-", "show hidden"),
+    ]),
+    ("WINDOWS", [
+        ("SUPER+H J K L", "focus"),
+        ("SUPER+ARROWS", "focus"),
+        ("SUPER+SHIFT+J K L", "move"),
+        ("SUPER+SHIFT+ARROWS", "move"),
+        ("SUPER+CTRL+H J K L", "resize"),
+        ("SUPER+CTRL+ARROWS", "resize"),
+        ("SUPER+=", "reset size"),
+        ("SUPER+Q", "close"),
+        ("SUPER+F", "fullscreen"),
+        ("SUPER+SHIFT+SPACE", "float / tile"),
+        ("SUPER+SHIFT+F", "float + center"),
+        ("SUPER+SPACE", "focus float/tile"),
+        ("SUPER+A", "focus parent"),
+        ("SUPER+Y", "sticky"),
+        ("SUPER+SHIFT+U", "jump to urgent"),
+    ]),
+    ("LAYOUT", [
+        ("SUPER+W", "tabbed"),
+        ("SUPER+S", "stacked"),
+        ("SUPER+T", "toggle split"),
+        ("SUPER+\\", "split horizontal"),
+        ("SUPER+V", "split vertical"),
+        ("SUPER+SHIFT+G", "toggle gaps"),
+    ]),
+    ("WORKSPACES", [
+        ("SUPER+1..0", "go to"),
+        ("SUPER+SHIFT+1..0", "move + follow"),
+        ("SUPER+CTRL+1..0", "move, stay"),
+        ("SUPER+[  ]", "prev / next"),
+        ("SUPER+SHIFT+TAB", "last used"),
+        ("SUPER+O", "to other monitor"),
+    ]),
+    ("SYSTEM", [
+        ("SUPER+ESC", "lock"),
+        ("SUPER+SHIFT+E", "power menu"),
+        ("SUPER+SHIFT+C", "reload i3"),
+        ("SUPER+SHIFT+R", "restart i3"),
+        ("SUPER+SHIFT+N", "night light"),
+        ("SUPER+SHIFT+D", "do not disturb"),
+        ("SUPER+.  ,", "dismiss / recall notif"),
+        ("SUPER+F5  F6", "brightness"),
+        ("SUPER+F7", "displays"),
+        ("SUPER+SHIFT+S", "screenshot area"),
+        ("SUPER+PRINT", "screenshot window"),
+        ("PRINT", "screenshot screen"),
+        ("SUPER+SHIFT+H", "this sheet"),
+        ("SUPER+F1", "searchable key list"),
+    ]),
+]
+COLUMNS = [["LAUNCH", "SCRATCHPAD"], ["WINDOWS", "LAYOUT"], ["WORKSPACES", "SYSTEM"]]
+KEY_W, DESC_W = 20, 22
+COL_W = KEY_W + DESC_W
+
+ANSI = re.compile(r"\033\[[0-9;]*m")
+def vis(s):
+    return len(ANSI.sub("", s))
+def pad(s, w):
+    return s + " " * max(0, w - vis(s))
+
+def column(names):
+    data = dict(SECTIONS)
+    out = []
+    for n in names:
+        if out:
+            out.append("")
+        title = f" {n} "
+        out.append(rgb(AMBER, True) + rgb(BG) + BOLD + title + RESET + rgb(BG) + rgb(DIM)
+                   + " " + "─" * (COL_W - len(title) - 1) + RESET)
+        for k, d in data[n]:
+            out.append(rgb(ORANGE) + k.ljust(KEY_W) + rgb(FG) + d + RESET)
+    return out
+
+PAD, BORDER = 10, 2          # kitty window_padding_width, i3 border
+
+def winsize():
+    return struct.unpack("HHHH", fcntl.ioctl(sys.stdout.fileno(), termios.TIOCGWINSZ, b"\0" * 8))
+
+def resize(w, h, old):
+    subprocess.run(["i3-msg", "-q", f"[con_id=__focused__] resize set {w} {h}, move position center"])
+    for _ in range(50):                           # wait until kitty has really resized
+        time.sleep(0.02)
+        if winsize()[:2] != old:
+            break
+    time.sleep(0.05)
+    return winsize()[:2]
+
+def fit_window(cols, rows):
+    """resize this floating window to wrap the sheet exactly; second pass fixes any shortfall"""
+    try:
+        r, c, xp, yp = winsize()
+        cw, ch = xp / c, yp / r
+        if not (cw and ch):
+            return
+        w = round(cols * cw) + 2 * PAD + 2 * BORDER + 4
+        h = round(rows * ch) + 2 * PAD + 2 * BORDER + 4
+        r2, c2 = resize(w, h, (r, c))
+        if r2 < rows or c2 < cols:
+            w += round(max(0, cols - c2) * cw)
+            h += round(max(0, rows - r2) * ch)
+            resize(w, h, (r2, c2))
+    except Exception:
+        pass
+
+def main():
+    cols = [column(c) for c in COLUMNS]
+    gap = 4
+    width = len(COLUMNS) * COL_W + (len(COLUMNS) - 1) * gap
+    rows = max(map(len, cols)) + 3                      # + blank, stripes, hint
+    fit_window(width, rows)
+    tw = shutil.get_terminal_size((width + 4, 40)).columns
+    margin = " " * max(0, (tw - width) // 2)
+
+    sys.stdout.write("\033[?25l\033[2J\033[H")          # hide cursor, clear
+    for i in range(max(map(len, cols))):
+        row = [(c[i] if i < len(c) else "") for c in cols]
+        print(margin + ((" " * gap).join(pad(r, COL_W) for r in row[:-1]) + " " * gap + row[-1]).rstrip())
+    print()
+    seg = width // len(STRIPES)
+    print(margin + "".join(rgb(c) + "▀" * (seg if j < 4 else width - 4 * seg) for j, c in enumerate(STRIPES)) + RESET)
+    hint = "PRESS ANY KEY TO CLOSE"
+    print(margin + rgb(DIM) + hint.center(width) + RESET, end="", flush=True)
+
+    fd = sys.stdin.fileno()
+    old = termios.tcgetattr(fd)
+    try:
+        tty.setraw(fd)
+        os.read(fd, 1)
+    finally:
+        termios.tcsetattr(fd, termios.TCSADRAIN, old)
+
+if __name__ == "__main__":
+    main()

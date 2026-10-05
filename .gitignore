@@ -1,0 +1,31 @@
+# Secrets must never land in this public repo. collect.sh never copies these,
+# and these patterns make sure a manual `git add` can't sneak them in either.
+.env
+.env.*
+*.env
+.ssh/
+**/.ssh/
+id_rsa*
+id_ecdsa*
+id_ed25519*
+*.pem
+*.key
+*.p12
+*.pfx
+*.kdbx
+**/.gnupg/
+**/github-copilot/
+**/.copilot/
+**/.claude/
+**/.claude.json
+**/*_history
+**/.Xauthority
+**/pulse/cookie
+**/system-connections/
+**/mozilla/firefox/*/
+**/tailscale*.state
+
+# runtime junk
+*.swp
+*~
+.DS_Store

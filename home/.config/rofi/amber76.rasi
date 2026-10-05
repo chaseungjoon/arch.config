@@ -1,0 +1,77 @@
+/* AMBER-76 :: flat retro terminal menu — no transparency, no rounding */
+* {
+    bg0:    #1c1b19;
+    bg1:    #2a2723;
+    bg2:    #3c3833;
+    fg:     #e8dcc0;
+    dim:    #9a8f7a;
+    amber:  #ffb000;
+    orange: #e8742c;
+    red:    #d0453b;
+    teal:   #3e9d9a;
+
+    background-color: transparent;
+    text-color:       @fg;
+    margin:  0;
+    padding: 0;
+    spacing: 0;
+}
+window {
+    location:         center;
+    width:            560px;
+    background-color: @bg0;
+    border:           2px;
+    border-color:     @amber;
+    border-radius:    0;
+}
+mainbox {
+    children: [ inputbar, message, listview, stripes ];
+}
+inputbar {
+    padding:          8px 10px;
+    spacing:          8px;
+    background-color: @bg1;
+    children:         [ prompt, textbox-sep, entry, num-filtered-rows ];
+}
+prompt          { text-color: @amber; }
+textbox-sep     { expand: false; str: ">"; text-color: @orange; }
+entry           { placeholder: "type to search_"; placeholder-color: @dim; cursor: text; }
+num-filtered-rows { text-color: @dim; }
+message         { expand: false; padding: 6px 10px; background-color: @bg1; border: 1px 0 0 0; border-color: @bg2; }
+textbox         { text-color: @fg; }
+listview {
+    lines:        9;
+    columns:      1;
+    fixed-height: true;
+    scrollbar:    true;
+    padding:      6px 0;
+    border:       1px 0 0 0;
+    border-color: @bg2;
+    expand:       true;
+}
+scrollbar {
+    handle-width: 4px;
+    handle-color: @amber;
+    background-color: @bg1;
+}
+element                  { padding: 3px 10px; }
+element normal.normal    { text-color: @fg; }
+element alternate.normal { text-color: @fg; }
+element normal.urgent, element alternate.urgent   { text-color: @red; }
+element normal.active, element alternate.active   { text-color: @teal; }
+element selected.normal  { background-color: @amber;  text-color: @bg0; }
+element selected.urgent  { background-color: @red;    text-color: @bg0; }
+element selected.active  { background-color: @teal;   text-color: @bg0; }
+element-text             { text-color: inherit; highlight: bold underline; }
+element-icon             { size: 0; }
+stripes {
+    orientation: horizontal;
+    expand:      false;
+    children:    [ s1, s2, s3, s4, s5 ];
+}
+s1, s2, s3, s4, s5 { expand: true; content: ""; padding: 2px 0; }
+s1 { background-color: #d0453b; }
+s2 { background-color: #e8742c; }
+s3 { background-color: #f2c14e; }
+s4 { background-color: #8fb339; }
+s5 { background-color: #3e9d9a; }

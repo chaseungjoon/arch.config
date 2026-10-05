@@ -1,0 +1,148 @@
+/* Amber76 — GTK3 theme for the retro i3 desktop (used by the wallpaper picker).
+   Flat, square, no shadows, no transitions. */
+@import url("resource:///org/gtk/libgtk/theme/Adwaita/gtk-contained-dark.css");
+
+@define-color theme_bg_color          #1c1b19;
+@define-color theme_fg_color          #e8dcc0;
+@define-color theme_base_color        #2a2723;
+@define-color theme_text_color        #e8dcc0;
+@define-color theme_selected_bg_color #ffb000;
+@define-color theme_selected_fg_color #1c1b19;
+@define-color borders                 #4a453e;
+
+* {
+    font-family: "Terminess Nerd Font", monospace;
+    border-radius: 0;
+    box-shadow: none;
+    text-shadow: none;
+    -gtk-icon-shadow: none;
+    transition: none;
+    outline-color: #ffb000;
+}
+window, .background, viewport, scrolledwindow, box, grid, flowbox, flowboxchild {
+    background-color: #1c1b19;
+    color: #e8dcc0;
+}
+label { color: #e8dcc0; }
+label:disabled { color: #9a8f7a; }
+
+headerbar, .titlebar {
+    background-image: none;
+    background-color: #ffb000;
+    color: #1c1b19;
+    border: none;
+    min-height: 26px;
+    padding: 0 6px;
+}
+headerbar label, headerbar .title { color: #1c1b19; font-weight: bold; }
+
+button {
+    background-image: none;
+    background-color: #2a2723;
+    color: #e8dcc0;
+    border: 1px solid #4a453e;
+    padding: 3px 8px;
+}
+button label { color: inherit; }
+button:hover { background-color: #3c3833; border-color: #ffb000; }
+button:active, button:checked {
+    background-color: #ffb000;
+    color: #1c1b19;
+    border-color: #ffb000;
+}
+button:disabled { background-color: #1c1b19; color: #5a544a; border-color: #2a2723; }
+button#thumb-btn, button#thumb-btn-selected { padding: 4px; }
+button#thumb-btn-selected, button#display-btn-selected, button#color-btn-selected {
+    background-color: #ffb000;
+    color: #1c1b19;
+}
+button#folder-btn { background-color: #3e9d9a; color: #1c1b19; border-color: #3e9d9a; }
+button#folder-btn:hover { background-color: #6fc3c0; }
+button#folder-btn label { color: #1c1b19; }
+
+entry, spinbutton, combobox button, textview, textview text {
+    background-image: none;
+    background-color: #2a2723;
+    color: #e8dcc0;
+    border: 1px solid #4a453e;
+    caret-color: #ffb000;
+}
+entry:focus { border-color: #ffb000; }
+
+*:selected, selection, menuitem:hover, row:selected, iconview:selected {
+    background-color: #ffb000;
+    color: #1c1b19;
+}
+menu, .menu, popover, .popover, .context-menu {
+    background-color: #1c1b19;
+    color: #e8dcc0;
+    border: 2px solid #ffb000;
+    padding: 2px;
+}
+menuitem { padding: 4px 10px; }
+
+check, radio {
+    background-image: none;
+    background-color: #2a2723;
+    border: 1px solid #9a8f7a;
+}
+check:checked, radio:checked { background-color: #ffb000; border-color: #ffb000; color: #1c1b19; }
+
+scrollbar { background-color: #1c1b19; border: none; }
+scrollbar slider {
+    background-color: #ffb000;
+    min-width: 6px;
+    min-height: 6px;
+    border: none;
+}
+scrollbar slider:hover { background-color: #f2c14e; }
+
+statusbar, statusbar#status-bar {
+    background-color: #2a2723;
+    color: #ffb000;
+    border-top: 2px solid #e8742c;
+    padding: 2px 6px;
+}
+separator { background-color: #4a453e; min-width: 1px; min-height: 1px; }
+tooltip, tooltip.background { background-color: #2a2723; color: #e8dcc0; border: 1px solid #ffb000; }
+dialog, messagedialog { background-color: #1c1b19; }
+filechooser, filechooser * { background-color: #1c1b19; color: #e8dcc0; }
+placessidebar row:selected { background-color: #ffb000; color: #1c1b19; }
+
+/* ── match Adwaita's own selectors so these win ─────────────────────────── */
+window.background, .background, window.background.csd, dialog.background {
+    background-color: #1c1b19;
+    color: #e8dcc0;
+}
+.view, .view text, iconview, treeview.view, list, list row, textview text, flowbox, .content-view {
+    background-color: #2a2723;
+    color: #e8dcc0;
+}
+.view:selected, .view:selected:focus, .view text:selected, treeview.view:selected,
+treeview.view:selected:focus, iconview:selected, list row:selected, list row:selected:focus,
+flowbox flowboxchild:selected, .view text selection, entry selection, label selection {
+    background-color: #ffb000;
+    color: #1c1b19;
+}
+treeview.view:hover, list row:hover { background-color: #3c3833; }
+treeview.view header button, treeview.view header button:hover {
+    background-color: #1c1b19;
+    color: #ffb000;
+    border-color: #4a453e;
+    font-weight: bold;
+}
+treeview.view expander { color: #e8742c; }
+.inline-toolbar, toolbar, actionbar, actionbar > revealer > box {
+    background-color: #1c1b19;
+    border-color: #4a453e;
+}
+frame > border, .frame { border-color: #4a453e; }
+notebook > header { background-color: #1c1b19; border-color: #4a453e; }
+notebook > header tab:checked { background-color: #ffb000; color: #1c1b19; }
+notebook > header tab:checked label { color: #1c1b19; }
+notebook > stack { background-color: #1c1b19; }
+switch { background-color: #2a2723; border-color: #4a453e; }
+switch:checked { background-color: #ffb000; }
+switch slider { background-color: #e8dcc0; border-color: #4a453e; }
+progressbar progress, scale highlight, levelbar block.filled { background-color: #ffb000; border-color: #ffb000; }
+progressbar trough, scale trough { background-color: #2a2723; border-color: #4a453e; }

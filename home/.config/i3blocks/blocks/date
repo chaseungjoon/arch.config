@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+. ~/.config/i3blocks/blocks/_lib
+[[ $BTN == 1 ]] && notify-send -a calendar "$(date '+%B %Y' | tr a-z A-Z)" "<tt>$(cal | tail -n +2)</tt>"
+printf "<span color='%s'>%s</span> <span color='%s'>%s</span>\n" "$AMBER" "$(date '+%a' | tr a-z A-Z)" "$FG" "$(date '+%d %b' | tr a-z A-Z)"

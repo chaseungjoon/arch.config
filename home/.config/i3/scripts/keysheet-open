@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# SUPER+SHIFT+H: toggle the keyboard reference popup
+if pkill -f 'kitty --class kitty-keys'; then exit 0; fi
+exec kitty --class kitty-keys -o remember_window_size=no -o window_padding_width=10 ~/.config/i3/scripts/keysheet

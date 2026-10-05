@@ -1,0 +1,91 @@
+# i3blocks :: AMBER-76 status line — grouped panels
+#
+#   [DND]  [NET| wlan  ts ]  [SYS| cpu mem ssd tmp ]  [PWR| vol lcd bat ]   FRI 02 OCT  16:37 ▌▌▌▌▌
+#
+# each panel = a coloured tag block + reading blocks on a raised strip (#2a2723).
+# readings stay separate blocks so their click/scroll actions keep working.
+# signals: 10 volume · 11 brightness · 12 dnd · 13 tailscale
+command=~/.config/i3blocks/blocks/$BLOCK_NAME
+markup=pango
+separator=false
+separator_block_width=0
+
+# ── alerts (only visible when there is something to say) ──
+[dnd]
+interval=once
+signal=12
+background=#e8742c
+separator_block_width=6
+
+# ── NET panel ──
+[tag_net]
+full_text=<b> NET </b>
+color=#1c1b19
+background=#3e9d9a
+
+[net]
+interval=10
+background=#35312b
+
+[tailscale]
+interval=20
+signal=13
+background=#35312b
+separator_block_width=8
+
+# ── SYS panel ──
+[tag_sys]
+full_text=<b> SYS </b>
+color=#1c1b19
+background=#ffb000
+
+[cpu]
+interval=3
+background=#35312b
+
+[mem]
+interval=5
+background=#35312b
+
+[disk]
+interval=120
+background=#35312b
+
+[temp]
+interval=10
+background=#35312b
+separator_block_width=8
+
+# ── PWR panel ──
+[tag_pwr]
+full_text=<b> PWR </b>
+color=#1c1b19
+background=#e8742c
+
+[volume]
+interval=30
+signal=10
+background=#35312b
+
+[brightness]
+interval=60
+signal=11
+background=#35312b
+
+[battery]
+interval=20
+background=#35312b
+separator_block_width=14
+
+# ── loose: date, time, stripes ──
+[date]
+interval=60
+separator_block_width=10
+
+[time]
+interval=5
+separator_block_width=10
+
+[stripes]
+interval=once
+separator_block_width=6

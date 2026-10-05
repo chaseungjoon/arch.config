@@ -1,0 +1,2 @@
+#!/bin/sh
+feh --no-fehbg --bg-scale "$HOME/Pictures/retro-x220.png" 

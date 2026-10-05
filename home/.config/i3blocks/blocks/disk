@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# whole-SSD usage: sums every partition on sda (/boot + LVM root + LVM home)
+. ~/.config/i3blocks/blocks/_lib
+[[ $BTN == 1 ]] && term sh -c 'df -h -x tmpfs -x devtmpfs -x efivarfs; echo; read -p "[ENTER] to close"'
+pct=$(df -l -x tmpfs -x devtmpfs -x efivarfs --output=used,size | awk 'NR>1 {u+=$1; s+=$2} END {printf "%d", (u*100+s-1)/s}')
+col=$FG; (( pct > 85 )) && col=$ORANGE; (( pct > 95 )) && col=$RED
+out "SSD" "${pct}%" "$col"

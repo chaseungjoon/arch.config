@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# toggle a warm "amber CRT" colour temperature (one-shot, no daemon)
+state=${XDG_RUNTIME_DIR:-/tmp}/nightlight.on
+if [[ -f $state ]]; then
+    redshift -P -x >/dev/null 2>&1; rm -f "$state"
+    notify-send -a osd -u low "NIGHT LIGHT" "off"
+else
+    redshift -P -O 3800 >/dev/null 2>&1; touch "$state"
+    notify-send -a osd -u low "NIGHT LIGHT" "3800K"
+fi

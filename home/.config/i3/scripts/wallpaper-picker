@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# SUPER+SHIFT+W: azote wallpaper picker, retro-themed, always opening in ~/Pictures
+command -v azote >/dev/null || { notify-send -a wallpaper "WALLPAPER" "azote not installed:  sudo pacman -S azote"; exit 1; }
+pics=$(xdg-user-dir PICTURES 2>/dev/null || echo "$HOME/Pictures")
+mkdir -p "$HOME/.local/share/azote"
+# azote keeps its folder in a pickled Settings object; point it at ~/Pictures
+python3 - "$pics" <<'PY'
+import os, pickle, sys, types
+mod = types.ModuleType("azote.tools")
+class Settings: pass
+mod.Settings = Settings
+Settings.__module__ = "azote.tools"
+sys.modules.setdefault("azote", types.ModuleType("azote"))
+sys.modules["azote.tools"] = mod
+path = os.path.expanduser("~/.local/share/azote/settings.pkl")
+s = None
+if os.path.isfile(path):
+    try:
+        with open(path, "rb") as f:
+            s = pickle.load(f)
+    except Exception:
+        s = None
+if s is None:
+    s = Settings(); s.sorting = "new"
+s.src_path = sys.argv[1]
+with open(path, "wb") as f:
+    pickle.dump(s, f)
+PY
+exec env GTK_THEME=Amber76 azote "$@"

@@ -1,0 +1,37 @@
+# zathura :: palette "AMBER-76" (matches ~/.config/i3/config)
+set font                    "Terminess Nerd Font 10.5"
+set selection-clipboard     clipboard
+set adjust-open             width
+set scroll-step             60
+set guioptions              s
+set statusbar-h-padding     6
+set statusbar-v-padding     2
+set window-title-basename   true
+
+set default-bg              "#1c1b19"
+set default-fg              "#e8dcc0"
+set statusbar-bg            "#1c1b19"
+set statusbar-fg            "#e8dcc0"
+set inputbar-bg             "#2a2723"
+set inputbar-fg             "#ffb000"
+set notification-bg         "#2a2723"
+set notification-fg         "#e8dcc0"
+set notification-error-bg   "#d0453b"
+set notification-error-fg   "#1c1b19"
+set notification-warning-bg "#f2c14e"
+set notification-warning-fg "#1c1b19"
+set completion-bg           "#2a2723"
+set completion-fg           "#9a8f7a"
+set completion-highlight-bg "#ffb000"
+set completion-highlight-fg "#1c1b19"
+set highlight-color         "rgba(242,193,78,0.4)"
+set highlight-active-color  "rgba(232,116,44,0.5)"
+set index-bg                "#1c1b19"
+set index-fg                "#e8dcc0"
+set index-active-bg         "#ffb000"
+set index-active-fg         "#1c1b19"
+
+# ctrl+r toggles this "night" recolor (amber on dark)
+set recolor-lightcolor      "#1c1b19"
+set recolor-darkcolor       "#e8dcc0"
+set recolor-keephue         true

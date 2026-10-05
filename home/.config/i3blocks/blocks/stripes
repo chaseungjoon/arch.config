@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# 70s racing stripes
+printf "<span color='#d0453b'>▌</span><span color='#e8742c'>▌</span><span color='#f2c14e'>▌</span><span color='#8fb339'>▌</span><span color='#3e9d9a'>▌</span>\n"

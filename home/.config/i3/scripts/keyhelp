@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# list every bindsym in the i3 config, searchable in rofi
+cfg=~/.config/i3/config
+awk '
+  /^# ── / { sub(/^# ── /,""); gsub(/─+$/,""); sec=toupper($0); next }
+  /^[ \t]*bindsym/ {
+      key=$2; $1=""; $2=""; sub(/^ +/,"")
+      gsub(/--no-startup-id /,""); gsub(/\$mod/,"SUPER",key); gsub(/\$alt/,"ALT",key)
+      printf "%-24s %-26s %s\n", sec, key, $0
+  }' "$cfg" | rofi -dmenu -i -p "KEYS" -no-custom -theme-str 'window {width: 1150px;} listview {lines: 18;}' >/dev/null

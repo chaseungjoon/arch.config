@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+. ~/.config/i3blocks/blocks/_lib
+[[ $BTN == 1 ]] && term btop
+cache=${XDG_RUNTIME_DIR:-/tmp}/i3blocks-cpu
+read -r _ u n s i w x y z _ < /proc/stat
+idle=$((i + w)); total=$((u + n + s + i + w + x + y + z))
+read -r pidle ptotal 2>/dev/null < "$cache" || { pidle=0; ptotal=0; }
+echo "$idle $total" > "$cache"
+dt=$((total - ptotal)); di=$((idle - pidle))
+pct=0; (( dt > 0 )) && pct=$(( (100 * (dt - di)) / dt ))
+col=$FG; (( pct > 60 )) && col=$ORANGE; (( pct > 90 )) && col=$RED
+out "CPU" "$(printf '%02d' "$pct")%" "$col"

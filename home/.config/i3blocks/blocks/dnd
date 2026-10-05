@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+. ~/.config/i3blocks/blocks/_lib
+[[ $BTN == 1 ]] && dunstctl set-paused toggle
+[[ $(dunstctl is-paused 2>/dev/null) == true ]] && printf "<span color='#1c1b19'><b> DND </b></span>\n"
+exit 0

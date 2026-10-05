@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# external display menu (VGA / DisplayPort on the X220)
+int=LVDS-1
+ext=$(xrandr --query | awk -v i="$int" '/ connected/ && $1!=i {print $1; exit}')
+if [[ -z $ext ]]; then
+    xrandr --output "$int" --auto --primary $(xrandr | awk -v i="$int" '/ disconnected/ && $1!=i {printf "--output %s --off ", $1}')
+    notify-send -a osd "DISPLAY" "no external monitor — laptop only"; exit
+fi
+choice=$(echo -e " LAPTOP ONLY\n EXTEND RIGHT\n EXTEND LEFT\n EXTEND ABOVE\n MIRROR\n EXTERNAL ONLY\n ARANDR..." |
+    rofi -dmenu -i -p "DISPLAY $ext" -no-custom -theme-str 'window {width: 340px;} listview {lines: 7;}')
+case "$choice" in
+    *"LAPTOP ONLY")   xrandr --output "$int" --auto --primary --output "$ext" --off ;;
+    *"EXTEND RIGHT")  xrandr --output "$int" --auto --primary --output "$ext" --auto --right-of "$int" ;;
+    *"EXTEND LEFT")   xrandr --output "$int" --auto --primary --output "$ext" --auto --left-of "$int" ;;
+    *"EXTEND ABOVE")  xrandr --output "$int" --auto --primary --output "$ext" --auto --above "$int" ;;
+    *MIRROR)          xrandr --output "$int" --auto --primary --output "$ext" --auto --same-as "$int" --scale-from 1366x768 ;;
+    *"EXTERNAL ONLY") xrandr --output "$ext" --auto --primary --output "$int" --off ;;
+    *ARANDR*)         arandr & exit ;;
+    *) exit ;;
+esac
+sleep 1; ~/.config/i3/scripts/wallpaper-restore

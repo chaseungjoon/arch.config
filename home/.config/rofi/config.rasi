@@ -1,0 +1,24 @@
+configuration {
+    modi:               "drun,run,window,ssh";
+    font:               "Terminess Nerd Font 12";
+    show-icons:         false;
+    terminal:           "kitty";
+    drun-display-format: "{name}";
+    display-drun:       "RUN";
+    display-run:        "CMD";
+    display-window:     "WIN";
+    display-ssh:        "SSH";
+    display-calc:       "CALC";
+    matching:           "fuzzy";
+    sort:               true;
+    sorting-method:     "fzf";
+    case-sensitive:     false;
+    disable-history:    false;
+    scroll-method:      1;
+    window-format:      "{w}  {c}  {t}";
+    kb-row-up:          "Up,Control+k";
+    kb-row-down:        "Down,Control+j";
+    kb-accept-entry:    "Return,KP_Enter";
+    kb-remove-to-eol:   "";
+}
+@theme "~/.config/rofi/amber76.rasi"

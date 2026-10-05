@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# volume / brightness keys -> change value, refresh bar block, show dunst bar
+sink=@DEFAULT_AUDIO_SINK@ src=@DEFAULT_AUDIO_SOURCE@
+vol_notify() {
+    local raw pct muted
+    raw=$(wpctl get-volume $sink)                     # "Volume: 0.45 [MUTED]"
+    pct=$(awk '{printf "%d", $2*100}' <<<"$raw")
+    [[ $raw == *MUTED* ]] && muted=" [MUTE]"
+    dunstify -a osd -u low -r 9901 -h int:value:"$pct" -h string:x-dunst-stack-tag:osd "VOLUME ${pct}%${muted}"
+    pkill -RTMIN+10 i3blocks
+}
+case "$1" in
+    vol-up)    wpctl set-mute $sink 0; wpctl set-volume -l 1.5 $sink 5%+; vol_notify ;;
+    vol-down)  wpctl set-volume $sink 5%-; vol_notify ;;
+    vol-mute)  wpctl set-mute $sink toggle; vol_notify ;;
+    mic-mute)
+        wpctl set-mute $src toggle
+        state=$(wpctl get-volume $src | grep -q MUTED && echo OFF || echo ON)
+        dunstify -a osd -u low -r 9902 "MICROPHONE $state" ;;
+    bright-up|bright-down)
+        [[ $1 == bright-up ]] && brightnessctl -q set 10%+ || brightnessctl -q -n2 set 10%-
+        pct=$(brightnessctl -m | awk -F, '{gsub("%","",$4); print $4}')
+        dunstify -a osd -u low -r 9903 -h int:value:"$pct" -h string:x-dunst-stack-tag:osd "BRIGHTNESS ${pct}%"
+        pkill -RTMIN+11 i3blocks ;;
+esac

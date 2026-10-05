@@ -1,0 +1,13 @@
+bluetooth.service
+getty@.service
+NetworkManager-dispatcher.service
+NetworkManager-wait-online.service
+NetworkManager.service
+power-profiles-daemon.service
+systemd-timesyncd.service
+tailscaled.service
+ufw.service
+systemd-userdbd.socket
+remote-fs.target
+fstrim.timer
+paccache.timer

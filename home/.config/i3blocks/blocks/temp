@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+. ~/.config/i3blocks/blocks/_lib
+[[ $BTN == 1 ]] && notify-send -a sensors "SENSORS" "$(sensors 2>/dev/null | grep -E '^(Package|Core|fan|CPU)' )"
+for h in /sys/class/hwmon/hwmon*; do
+    [[ $(<"$h/name") == coretemp ]] && { t=$(( $(<"$h/temp1_input") / 1000 )); break; }
+done
+[[ -z $t ]] && t=$(( $(</sys/class/thermal/thermal_zone0/temp) / 1000 ))
+col=$FG; (( t >= 70 )) && col=$ORANGE; (( t >= 85 )) && col=$RED
+out "TMP" "${t}°C" "$col"

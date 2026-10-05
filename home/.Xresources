@@ -1,0 +1,30 @@
+! X220 12.5in 1366x768 - keep 96 dpi so Terminus renders pixel-perfect
+Xft.dpi:       96
+Xft.antialias: true
+Xft.hinting:   true
+Xft.hintstyle: hintslight
+Xft.rgba:      rgb
+Xft.lcdfilter: lcddefault
+Xcursor.theme: Adwaita
+Xcursor.size:  24
+
+! AMBER-76 for any X11 app that reads resources (xterm, etc.)
+*.foreground:  #e8dcc0
+*.background:  #1c1b19
+*.cursorColor: #ffb000
+*.color0:  #1c1b19
+*.color8:  #5a544a
+*.color1:  #d0453b
+*.color9:  #ef6a5a
+*.color2:  #8fb339
+*.color10: #b5d36a
+*.color3:  #f2a33a
+*.color11: #ffcf5c
+*.color4:  #4f7cac
+*.color12: #78a2d2
+*.color5:  #b5679b
+*.color13: #d58fc0
+*.color6:  #3e9d9a
+*.color14: #6fc3c0
+*.color7:  #d8ccb0
+*.color15: #f4ead2

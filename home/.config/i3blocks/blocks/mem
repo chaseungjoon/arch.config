@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+. ~/.config/i3blocks/blocks/_lib
+[[ $BTN == 1 ]] && term btop
+read -r used pct < <(awk '/^MemTotal:/ {t=$2} /^MemAvailable:/ {a=$2} END {printf "%.1fG %d\n", (t-a)/1048576, (t-a)*100/t}' /proc/meminfo)
+col=$FG; (( pct > 75 )) && col=$ORANGE; (( pct > 90 )) && col=$RED
+out "MEM" "$used" "$col"

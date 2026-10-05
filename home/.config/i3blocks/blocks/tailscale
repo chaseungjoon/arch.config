@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+. ~/.config/i3blocks/blocks/_lib
+command -v tailscale >/dev/null || exit 0
+state=$(tailscale status --json --peers=false 2>/dev/null | sed -n 's/.*"BackendState": *"\([^"]*\)".*/\1/p' | head -1)
+if [[ $BTN == 1 ]]; then
+    if [[ $state == Running ]]; then tailscale down; else tailscale up; fi 2>/dev/null ||
+        notify-send -a tailscale "TAILSCALE" "run once:  sudo tailscale up --operator=$USER"
+    pkill -RTMIN+13 i3blocks; exit 0
+fi
+case "$state" in
+    Running)    out "TS" "ON" "$GREEN" ;;
+    NeedsLogin) out "TS" "LOGIN" "$ORANGE" ;;
+    "")         out "TS" "--" "$DIM" ;;
+    *)          out "TS" "OFF" "$DIM" ;;
+esac

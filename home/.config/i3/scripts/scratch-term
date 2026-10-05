@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# quake-style dropdown terminal on SUPER+`
+if xdotool search --classname '^dropdown$' >/dev/null 2>&1; then
+    i3-msg -q '[instance="^dropdown$"] scratchpad show, move position center'
+else
+    kitty --name dropdown &
+    sleep 0.4
+    i3-msg -q '[instance="^dropdown$"] move scratchpad, scratchpad show, move position center'
+fi

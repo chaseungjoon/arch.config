@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# lock screen with the retro wallpaper; pause notifications while locked
+img=~/.local/share/backgrounds/retro-x220-lock.png
+was_paused=$(dunstctl is-paused 2>/dev/null)
+dunstctl set-paused true 2>/dev/null
+playerctl -a pause 2>/dev/null
+if [[ -f $img ]]; then
+    i3lock -n -e -f -c 1c1b19 -i "$img"
+else
+    i3lock -n -e -f -c 1c1b19
+fi
+[[ $was_paused == true ]] || dunstctl set-paused false 2>/dev/null

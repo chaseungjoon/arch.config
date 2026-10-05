@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+. ~/.config/i3blocks/blocks/_lib
+s=@DEFAULT_AUDIO_SINK@
+case $BTN in
+    1) setsid -f pavucontrol >/dev/null 2>&1 ;;
+    3) wpctl set-mute $s toggle ;;
+    4) wpctl set-volume -l 1.5 $s 5%+ ;;
+    5) wpctl set-volume $s 5%- ;;
+esac
+raw=$(wpctl get-volume $s 2>/dev/null) || { out "VOL" "N/A" "$DIM"; exit 0; }
+pct=$(awk '{printf "%d", $2*100}' <<<"$raw")
+if [[ $raw == *MUTED* ]]; then out "VOL" "MUTE" "$DIM"; else out "VOL" "$(printf '%02d' "$pct")%"; fi

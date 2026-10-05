@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+. ~/.config/i3blocks/blocks/_lib
+[[ $BTN == 1 ]] && term nmtui
+[[ $BTN == 3 ]] && setsid -f nm-connection-editor >/dev/null 2>&1
+for e in /sys/class/net/en*; do
+    [[ -e $e && $(<"$e/operstate") == up ]] && { out "ETH" "up" "$GREEN"; exit 0; }
+done
+wifi=$(nmcli -t -f active,ssid,signal dev wifi list --rescan no 2>/dev/null | awk -F: '$1=="yes"{print $2":"$3; exit}')
+if [[ -n $wifi ]]; then
+    ssid=${wifi%:*}; sig=${wifi##*:}
+    (( ${#ssid} > 12 )) && ssid="${ssid:0:11}~"
+    col=$FG; (( sig < 40 )) && col=$ORANGE
+    out "WLAN" "$ssid $(printf '%02d' "$sig")%" "$col"
+else
+    out "NET" "OFFLINE" "$RED"
+fi

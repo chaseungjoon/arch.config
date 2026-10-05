@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# screenshot full|select|window -> ~/Pictures/Screenshots + clipboard
+dir=~/Pictures/Screenshots; mkdir -p "$dir"
+file="$dir/$(date +%Y-%m-%d_%H-%M-%S).png"
+case "$1" in
+    select) maim -s -u -b 2 -c 1,0.69,0 "$file" || exit 1 ;;
+    window) maim -u -i "$(xdotool getactivewindow)" "$file" || exit 1 ;;
+    *)      maim -u "$file" || exit 1 ;;
+esac
+xclip -selection clipboard -t image/png -i "$file"
+notify-send -a screenshot -i "$file" "SCREENSHOT" "saved ${file/#$HOME/\~}\ncopied to clipboard"

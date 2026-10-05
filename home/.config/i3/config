@@ -1,0 +1,293 @@
+# ╔══════════════════════════════════════════════════════════════════════╗
+# ║  i3 :: X220 RETRO WORKSTATION                                        ║
+# ║  palette "AMBER-76" · font Terminess · no compositor / no effects    ║
+# ║  SUPER+F1 shows every keybinding in this file                        ║
+# ╚══════════════════════════════════════════════════════════════════════╝
+
+set $mod Mod4
+set $alt Mod1
+
+# ── programs ────────────────────────────────────────────────────────────
+set $term     kitty
+set $browser  firefox
+set $scripts  ~/.config/i3/scripts
+set $launcher rofi -show drun
+set $lock     $scripts/lock
+
+# ── palette "AMBER-76" ──────────────────────────────────────────────────
+set $bg0      #1c1b19
+set $bg1      #2a2723
+set $bg2      #3c3833
+set $grey     #4a453e
+set $dim      #9a8f7a
+set $fg       #e8dcc0
+set $amber    #ffb000
+set $orange   #e8742c
+set $red      #d0453b
+set $mustard  #f2c14e
+set $green    #8fb339
+set $teal     #3e9d9a
+set $blue     #4f7cac
+
+# ── look ────────────────────────────────────────────────────────────────
+font pango:Terminess Nerd Font 10.5
+
+default_border          pixel 2
+default_floating_border pixel 2
+hide_edge_borders       none
+title_align             left
+for_window [class=".*"] title_format " %title"
+
+gaps inner 6
+gaps outer 0
+smart_gaps   on
+smart_borders on
+
+# class                 border   bg       text     indicator  child_border
+client.focused          $amber   $amber   $bg0     $orange    $amber
+client.focused_inactive $bg2     $bg2     $fg      $bg2       $bg2
+client.unfocused        $bg1     $bg1     $dim     $bg1       $bg1
+client.urgent           $red     $red     $bg0     $red       $red
+client.placeholder      $bg0     $bg0     $dim     $bg0       $bg0
+client.background       $bg0
+
+# ── behaviour ───────────────────────────────────────────────────────────
+focus_follows_mouse         no
+mouse_warping               output
+focus_on_window_activation  smart
+workspace_auto_back_and_forth yes
+floating_modifier           $mod
+tiling_drag                 modifier titlebar
+floating_minimum_size       200 x 120
+floating_maximum_size       1300 x 720
+
+# ── autostart ───────────────────────────────────────────────────────────
+# keyboard: CapsLock is an extra Super (also set system-wide in /etc/X11/xorg.conf.d/00-keyboard.conf)
+exec --no-startup-id setxkbmap -layout us -option '' -option caps:super -option terminate:ctrl_alt_bksp
+exec --no-startup-id xset r rate 250 40
+# touchpad: reversed ("natural") scrolling; TrackPoint scrolling is unchanged
+exec --no-startup-id xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Natural Scrolling Enabled" 1
+# lock after 10 min idle, screen off after 15, lock before suspend
+exec --no-startup-id xset s 600 600
+exec --no-startup-id xset dpms 900 900 900
+exec --no-startup-id xss-lock --transfer-sleep-lock -- $lock
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec --no-startup-id dunst
+exec --no-startup-id clipmenud
+exec --no-startup-id unclutter --timeout 4 --jitter 5 --ignore-scrolling
+# XDG autostart: nm-applet, blueman (picom and fcitx5 are masked in ~/.config/autostart)
+exec --no-startup-id dex --autostart --environment i3
+exec_always --no-startup-id $scripts/wallpaper-restore
+exec_always --no-startup-id $scripts/autotiling-start
+
+# ── workspaces ──────────────────────────────────────────────────────────
+set $ws1  "1"
+set $ws2  "2"
+set $ws3  "3"
+set $ws4  "4"
+set $ws5  "5"
+set $ws6  "6"
+set $ws7  "7"
+set $ws8  "8"
+set $ws9  "9"
+set $ws10 "10"
+
+# switch to workspace
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+# move window to workspace (and follow it)
+bindsym $mod+Shift+1 move container to workspace number $ws1;  workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2;  workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3;  workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4;  workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5;  workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6;  workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7;  workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8;  workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9;  workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10; workspace number $ws10
+
+# move window to workspace silently (stay here)
+bindsym $mod+Ctrl+1 move container to workspace number $ws1
+bindsym $mod+Ctrl+2 move container to workspace number $ws2
+bindsym $mod+Ctrl+3 move container to workspace number $ws3
+bindsym $mod+Ctrl+4 move container to workspace number $ws4
+bindsym $mod+Ctrl+5 move container to workspace number $ws5
+bindsym $mod+Ctrl+6 move container to workspace number $ws6
+bindsym $mod+Ctrl+7 move container to workspace number $ws7
+bindsym $mod+Ctrl+8 move container to workspace number $ws8
+bindsym $mod+Ctrl+9 move container to workspace number $ws9
+bindsym $mod+Ctrl+0 move container to workspace number $ws10
+
+# cycle workspaces / jump back / send workspace to other monitor
+bindsym $mod+bracketright workspace next_on_output
+bindsym $mod+bracketleft  workspace prev_on_output
+bindsym $mod+Shift+Tab    workspace back_and_forth
+bindsym $mod+o            move workspace to output next
+
+# ── launchers ───────────────────────────────────────────────────────────
+bindsym $mod+Return       exec --no-startup-id $term
+bindsym $mod+Shift+Return exec --no-startup-id $term --class kitty-float
+bindsym $mod+b            exec --no-startup-id $browser
+bindsym $mod+Shift+b      exec --no-startup-id $browser --private-window
+bindsym $mod+r            exec --no-startup-id $launcher
+bindsym $mod+d            exec --no-startup-id rofi -show run
+bindsym $mod+Tab          exec --no-startup-id rofi -show window
+bindsym $mod+c            exec --no-startup-id rofi -show calc -modi calc -no-show-match -no-sort -calc-command "echo -n '{result}' | xclip -selection clipboard"
+bindsym $mod+p            exec --no-startup-id env CM_LAUNCHER=rofi clipmenu -p CLIP
+bindsym $mod+e            exec --no-startup-id $term --class kitty-files yazi
+bindsym $mod+n            exec --no-startup-id $term --class kitty-code nvim
+bindsym $mod+g            exec --no-startup-id $term --class kitty-code lazygit
+bindsym $mod+grave        exec --no-startup-id $scripts/scratch-term
+bindsym XF86Launch1       exec --no-startup-id $term --class kitty-float btop
+bindsym $mod+F1           exec --no-startup-id $scripts/keyhelp
+bindsym $mod+Shift+h      exec --no-startup-id $scripts/keysheet-open
+bindsym $mod+Shift+w      exec --no-startup-id $scripts/wallpaper-picker
+
+# ── window focus (vim + arrows) ─────────────────────────────────────────
+bindsym $mod+h     focus left
+bindsym $mod+j     focus down
+bindsym $mod+k     focus up
+bindsym $mod+l     focus right
+bindsym $mod+Left  focus left
+bindsym $mod+Down  focus down
+bindsym $mod+Up    focus up
+bindsym $mod+Right focus right
+bindsym $mod+a     focus parent
+bindsym $mod+Shift+a focus child
+bindsym $mod+space focus mode_toggle
+
+# ── move windows ────────────────────────────────────────────────────────
+bindsym $mod+Shift+j     move down  30 px
+bindsym $mod+Shift+k     move up    30 px
+bindsym $mod+Shift+l     move right 30 px
+bindsym $mod+Shift+Left  move left  30 px
+bindsym $mod+Shift+Down  move down  30 px
+bindsym $mod+Shift+Up    move up    30 px
+bindsym $mod+Shift+Right move right 30 px
+
+# ── resize (direct, no mode needed) ─────────────────────────────────────
+bindsym $mod+Ctrl+h     resize shrink width  40 px or 4 ppt
+bindsym $mod+Ctrl+j     resize grow   height 40 px or 4 ppt
+bindsym $mod+Ctrl+k     resize shrink height 40 px or 4 ppt
+bindsym $mod+Ctrl+l     resize grow   width  40 px or 4 ppt
+bindsym $mod+Ctrl+Left  resize shrink width  40 px or 4 ppt
+bindsym $mod+Ctrl+Down  resize grow   height 40 px or 4 ppt
+bindsym $mod+Ctrl+Up    resize shrink height 40 px or 4 ppt
+bindsym $mod+Ctrl+Right resize grow   width  40 px or 4 ppt
+bindsym $mod+equal      resize set 50 ppt 50 ppt
+
+# ── layout ──────────────────────────────────────────────────────────────
+# autotiling picks the split direction for you; these override it
+bindsym $mod+backslash split h
+bindsym $mod+v         split v
+bindsym $mod+s         layout stacking
+bindsym $mod+w         layout tabbed
+bindsym $mod+t         layout toggle split
+bindsym $mod+f         fullscreen toggle
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+Shift+f   floating enable, resize set 1000 600, move position center
+bindsym $mod+y         sticky toggle
+bindsym $mod+Shift+g   gaps inner all toggle 6
+bindsym $mod+Shift+u   [urgent=latest] focus
+
+# ── scratchpad ──────────────────────────────────────────────────────────
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus       scratchpad show
+
+# ── close ───────────────────────────────────────────────────────────────
+bindsym $mod+q       kill
+bindsym $mod+Shift+q kill
+
+# ── session ─────────────────────────────────────────────────────────────
+bindsym $mod+Escape  exec --no-startup-id $lock
+bindsym $mod+Shift+e exec --no-startup-id $scripts/powermenu
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+
+# ── screenshots (saved to ~/Pictures/Screenshots + copied) ──────────────
+bindsym Print             exec --no-startup-id $scripts/screenshot full
+bindsym Shift+Print       exec --no-startup-id $scripts/screenshot select
+bindsym $mod+Shift+s      exec --no-startup-id $scripts/screenshot select
+bindsym $mod+Print        exec --no-startup-id $scripts/screenshot window
+
+# ── hardware keys ───────────────────────────────────────────────────────
+bindsym XF86AudioRaiseVolume  exec --no-startup-id $scripts/osd vol-up
+bindsym XF86AudioLowerVolume  exec --no-startup-id $scripts/osd vol-down
+bindsym XF86AudioMute         exec --no-startup-id $scripts/osd vol-mute
+bindsym XF86AudioMicMute      exec --no-startup-id $scripts/osd mic-mute
+bindsym XF86MonBrightnessUp   exec --no-startup-id $scripts/osd bright-up
+bindsym XF86MonBrightnessDown exec --no-startup-id $scripts/osd bright-down
+bindsym $mod+F5               exec --no-startup-id $scripts/osd bright-down
+bindsym $mod+F6               exec --no-startup-id $scripts/osd bright-up
+bindsym XF86AudioPlay         exec --no-startup-id playerctl play-pause
+bindsym XF86AudioNext         exec --no-startup-id playerctl next
+bindsym XF86AudioPrev         exec --no-startup-id playerctl previous
+bindsym XF86AudioStop         exec --no-startup-id playerctl stop
+bindsym XF86Display           exec --no-startup-id $scripts/monitors
+bindsym $mod+F7               exec --no-startup-id $scripts/monitors
+bindsym $mod+Shift+n          exec --no-startup-id $scripts/nightlight
+bindsym $mod+Shift+d          exec --no-startup-id dunstctl set-paused toggle && pkill -RTMIN+12 i3blocks
+bindsym $mod+period           exec --no-startup-id dunstctl close-all
+bindsym $mod+comma            exec --no-startup-id dunstctl history-pop
+
+# ── window rules ────────────────────────────────────────────────────────
+for_window [window_role="pop-up"]       floating enable
+for_window [window_role="bubble"]       floating enable
+for_window [window_role="dialog"]       floating enable
+for_window [window_type="dialog"]       floating enable
+for_window [window_role="About"]        floating enable
+for_window [class="kitty-keys"]         floating enable, resize set 1110 640, move position center, border pixel 2
+for_window [class="(?i)azote"]          floating enable, resize set 1150 680, move position center
+for_window [class="kitty-float"]        floating enable, resize set 1000 600, move position center
+for_window [class="Pavucontrol"]        floating enable, resize set 820 520, move position center
+for_window [class="Nm-connection-editor"] floating enable
+for_window [class="Blueman-manager"]    floating enable, resize set 700 480, move position center
+for_window [class="Arandr"]             floating enable
+for_window [class="firefox" window_role="PictureInPicture"] floating enable, sticky enable
+for_window [title="^Picture-in-Picture$"] floating enable, sticky enable
+for_window [class="firefox" window_role="Organizer"] floating enable
+for_window [instance="^dropdown$"]      floating enable, resize set 1100 500, move position center, sticky enable, border pixel 2
+
+# ── bar ─────────────────────────────────────────────────────────────────
+bar {
+    id                  topbar
+    position            top
+    status_command      i3blocks
+    font                pango:Terminess Nerd Font 10.5
+    height              20
+    workspace_buttons   yes
+    workspace_command   ~/.config/i3/scripts/workspaces
+    # buttons are bar height - 2 = 18px tall -> 18px wide makes them square
+    workspace_min_width 18
+    strip_workspace_numbers no
+    binding_mode_indicator yes
+    separator_symbol    " ┃ "
+    tray_output         primary
+    tray_padding        2
+
+    colors {
+        background  $bg0
+        statusline  $fg
+        separator   $grey
+        focused_background $bg0
+        focused_statusline $fg
+        focused_separator  $grey
+
+        #                   border   bg       text
+        focused_workspace   $amber   $amber   $bg0
+        active_workspace    $teal    $teal    $bg0
+        inactive_workspace  $bg1     $bg1     $dim
+        urgent_workspace    $red     $red     $bg0
+        binding_mode        $orange  $orange  $bg0
+    }
+}

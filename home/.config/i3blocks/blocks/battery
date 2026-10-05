@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+. ~/.config/i3blocks/blocks/_lib
+b=/sys/class/power_supply/BAT0
+[[ -d $b ]] || { out "AC" "ONLY" "$DIM"; exit 0; }
+cap=$(<"$b/capacity"); st=$(<"$b/status")
+if [[ $BTN == 1 ]]; then
+    notify-send -a battery "BATTERY" "$(acpi -bi 2>/dev/null || echo "$cap% $st")\nprofile: $(powerprofilesctl get 2>/dev/null)"
+fi
+flag=${XDG_RUNTIME_DIR:-/tmp}/battery-warned
+case $st in
+    Charging)      sym="+"; col=$GREEN ;;
+    Full|"Not charging") sym="="; col=$GREEN ;;
+    *)             sym="-"; col=$FG
+                   (( cap <= 30 )) && col=$ORANGE
+                   (( cap <= 15 )) && col=$RED ;;
+esac
+if [[ $st == Discharging ]] && (( cap <= 10 )); then
+    [[ -f $flag ]] || { notify-send -u critical -a battery "BATTERY LOW" "${cap}% remaining — plug in"; touch "$flag"; }
+else
+    rm -f "$flag"
+fi
+out "BAT" "$(printf '%02d' "$cap")%$sym" "$col"

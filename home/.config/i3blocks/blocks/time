@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+. ~/.config/i3blocks/blocks/_lib
+printf "<span color='%s'><b>%s</b></span>\n" "$AMBER" "$(date '+%H:%M')"
