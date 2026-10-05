@@ -38,8 +38,11 @@ sudo mount /dev/sdb1 /mnt
 # close Firefox and other apps first so their files aren't changing mid-copy
 sudo rsync -aAXH --info=progress2 /home/ /mnt/home/
 # optional: the root filesystem too (configs, package database)
+# (patterns are quoted one by one: zsh aborts on unquoted globs like /dev/*)
 sudo rsync -aAXH --info=progress2 \
-    --exclude={/dev/*,/proc/*,/sys/*,/tmp/*,/run/*,/mnt/*,/media/*,/home/*,/lost+found} \
+    --exclude='/dev/*' --exclude='/proc/*' --exclude='/sys/*' --exclude='/tmp/*' \
+    --exclude='/run/*' --exclude='/mnt/*' --exclude='/media/*' --exclude='/home/*' \
+    --exclude='/lost+found' --exclude='/var/cache/pacman/pkg/*' \
     / /mnt/rootfs/
 sync && sudo umount /mnt
 ```
