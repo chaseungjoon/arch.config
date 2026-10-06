@@ -1,1 +1,1 @@
-root=/dev/ArchinstallVg/root zswap.enabled=0 rw rootfstype=ext4
+root=PARTUUID=42478271-aaa1-4a0b-8f75-ba3fdd8680f8 zswap.enabled=0 rw rootfstype=ext4

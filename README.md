@@ -17,7 +17,7 @@ no compositor or effects.
 1. Install Arch with `archinstall`. These settings match this machine:
    - **Profile:** minimal (no desktop; i3 comes from this repo)
    - **Bootloader:** systemd-boot (UEFI), **unified kernel image:** yes
-   - **Disk:** ext4. LVM is optional (this machine uses it: 32 GiB root plus the rest for home)
+   - **Disk:** ext4. LVM is optional (this machine uses a single ext4 root partition, no LVM)
    - **Network:** NetworkManager
    - **User:** your user, added to the sudo/wheel group
    - **Timezone / locale:** whatever you like (the installer sets Asia/Seoul and en_US.UTF-8)

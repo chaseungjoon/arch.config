@@ -2,12 +2,9 @@
 # See fstab(5) for details.
 
 # <file system> <dir> <type> <options> <dump> <pass>
-# /dev/mapper/ArchinstallVg-root
-UUID=97a7f143-d8f0-4c0c-aba6-3f3d573a8c60	/         	ext4      	rw,relatime	0 1
-
-# /dev/mapper/ArchinstallVg-home
-UUID=1ce435e4-d241-4e34-b63a-10bff15a74bd	/home     	ext4      	rw,relatime	0 2
+# /dev/sda2
+UUID=9e5ce8bb-e1c0-4984-b777-a63e5315a39b	/         	ext4      	rw,relatime	0 1
 
 # /dev/sda1
-UUID=6E85-A1DE      	/boot     	vfat      	rw,relatime,fmask=0077,dmask=0077,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro	0 2
+UUID=5AA2-79C7      	/boot     	vfat      	rw,relatime,fmask=0077,dmask=0077,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro	0 2
 
