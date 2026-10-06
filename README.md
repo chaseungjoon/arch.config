@@ -8,7 +8,7 @@ no compositor or effects.
 `collect.sh` takes a new snapshot of this machine and saves it into the repo.
 
 ```
- palette  bg #1c1b19  bg1 #2a2723  fg #e8dcc0  amber #ffb000  orange #e8742c
+ palette  bg #1c1b19  bar/term #282828 (matches wallpaper)  bg1 #2a2723  fg #e8dcc0  amber #ffb000  orange #e8742c
           red #d0453b  mustard #f2c14e  green #8fb339  teal #3e9d9a  blue #4f7cac
 ```
 
@@ -72,14 +72,14 @@ home/                 mirrored into $HOME
   .tmux.conf            prefix Ctrl+S, AMBER-76 status line
   .config/i3/           i3 config + scripts (lock, OSD, power menu, screenshots, keysheet,
                         monitors, night light, wallpaper picker, persistent workspaces)
-  .config/i3blocks/     status bar panels: NET (wifi, tailscale) · SYS (cpu, mem, ssd, temp) · PWR (vol, lcd, bat)
+  .config/i3blocks/     status bar panels: SYS (cpu, mem, ssd, temp) · PWR (vol, lcd, bat)
   .config/kitty/        terminal
   .config/rofi/         launcher + amber76.rasi theme
   .config/dunst/        notifications + OSD bars
   .config/nvim/         neovim (lazy.nvim, coc, treesitter, telescope, neo-tree, AMBER-76 lualine)
   .config/zathura/ fastfetch/ btop/ lazygit/ fcitx5/ gtk-3.0/ gtk-4.0/ azote/ autostart/
   .themes/Amber76/      GTK theme used by azote
-  .local/share/backgrounds/, Pictures/   wallpapers and the lock screen image
+  .local/share/backgrounds/, Pictures/   wallpapers (peakpx.jpg is the default) and the lock screen image
 system/etc/           applied to /etc by install.sh
 reference/etc/        this machine's fstab, mkinitcpio, kernel cmdline, ufw rules, …
                       (disk/bootloader-specific, kept for reference, never applied)

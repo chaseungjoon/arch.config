@@ -16,6 +16,7 @@ set $lock     $scripts/lock
 
 # ── palette "AMBER-76" ──────────────────────────────────────────────────
 set $bg0      #1c1b19
+set $wallbg   #282828
 set $bg1      #2a2723
 set $bg2      #3c3833
 set $grey     #4a453e
@@ -276,10 +277,10 @@ bar {
     tray_padding        2
 
     colors {
-        background  $bg0
+        background  $wallbg
         statusline  $fg
         separator   $grey
-        focused_background $bg0
+        focused_background $wallbg
         focused_statusline $fg
         focused_separator  $grey
 

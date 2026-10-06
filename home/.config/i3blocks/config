@@ -1,10 +1,10 @@
 # i3blocks :: AMBER-76 status line — grouped panels
 #
-#   [DND]  [NET| wlan  ts ]  [SYS| cpu mem ssd tmp ]  [PWR| vol lcd bat ]   FRI 02 OCT  16:37 ▌▌▌▌▌
+#   [DND]  [SYS| cpu mem ssd tmp ]  [PWR| vol lcd bat ]   FRI 02 OCT  16:37 ▌▌▌▌▌
 #
 # each panel = a coloured tag block + reading blocks on a raised strip (#2a2723).
 # readings stay separate blocks so their click/scroll actions keep working.
-# signals: 10 volume · 11 brightness · 12 dnd · 13 tailscale
+# signals: 10 volume · 11 brightness · 12 dnd
 command=~/.config/i3blocks/blocks/$BLOCK_NAME
 markup=pango
 separator=false
@@ -16,22 +16,6 @@ interval=once
 signal=12
 background=#e8742c
 separator_block_width=6
-
-# ── NET panel ──
-[tag_net]
-full_text=<b> NET </b>
-color=#1c1b19
-background=#3e9d9a
-
-[net]
-interval=10
-background=#35312b
-
-[tailscale]
-interval=20
-signal=13
-background=#35312b
-separator_block_width=8
 
 # ── SYS panel ──
 [tag_sys]

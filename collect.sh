@@ -32,7 +32,7 @@ HOME_PATHS=(
     .config/gtk-3.0/settings.ini .config/gtk-4.0/settings.ini
     .themes
     .local/share/backgrounds
-    Pictures/retro-x220.png Pictures/retro-x220-sunset.png
+    Pictures/retro-x220.png Pictures/retro-x220-sunset.png Pictures/peakpx.jpg
     # desktop integration
     .config/autostart .config/mimeapps.list
     .config/user-dirs.dirs .config/user-dirs.locale
