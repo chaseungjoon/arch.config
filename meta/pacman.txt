@@ -14,6 +14,7 @@ btop
 clang
 clipmenu
 dex
+dmidecode
 dosfstools
 dunst
 efibootmgr
@@ -75,6 +76,7 @@ rofi-calc
 rsync
 smartmontools
 sudo
+sysbench
 tailscale
 tealdeer
 tmux

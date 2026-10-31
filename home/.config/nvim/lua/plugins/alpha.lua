@@ -8,35 +8,19 @@ return {
         local alpha = require("alpha")
         local dashboard = require("alpha.themes.dashboard")
 
-        -- Header: Arch logo (teal) + NVIM (amber), side by side
-        local logo = {
-            [[                  ]],
-            [[        /\        ]],
-            [[       /  \       ]],
-            [[      /\   \      ]],
-            [[     /      \     ]],
-            [[    /   ,,   \    ]],
-            [[   /   |  |  -\   ]],
-            [[  /_-''    ''-_\  ]],
+        -- Header: NEOVIM (ANSI Shadow)
+        dashboard.section.header.val = {
+            [[]],
+            [[]],
+            [[███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗]],
+            [[████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║]],
+            [[██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║]],
+            [[██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║]],
+            [[██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║]],
+            [[╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝]],
+            [[]],
         }
-        local nvim = {
-            [[                                              ]],
-            [[                                              ]],
-            [[ ██      ██  ██      ██  ██████  ██      ██ ]],
-            [[ ████    ██  ██      ██    ██    ████  ████ ]],
-            [[ ██  ██  ██  ██      ██    ██    ██  ██  ██ ]],
-            [[ ██    ████    ██  ██      ██    ██      ██ ]],
-            [[ ██      ██      ██      ██████  ██      ██ ]],
-            [[                                              ]],
-        }
-        local header, header_hl = { "", "" }, { { { "AlphaHeader", 0, -1 } }, { { "AlphaHeader", 0, -1 } } }
-        for i = 1, #logo do
-            local left = logo[i] .. "  "
-            header[#header + 1] = left .. nvim[i]
-            header_hl[#header_hl + 1] = { { "AlphaLogo", 0, #left }, { "AlphaHeader", #left, -1 } }
-        end
-        dashboard.section.header.val = header
-        dashboard.section.header.opts.hl = header_hl
+        dashboard.section.header.opts.hl = "AlphaHeader"
 
         -- Buttons (plain text: no icon glyphs that can render as "?")
         local function button(key, label, cmd)
